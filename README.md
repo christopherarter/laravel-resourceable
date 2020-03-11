@@ -1,7 +1,14 @@
 ### Laravel Resourceable
 Laravel Resourceable is a package allowing you to quickly access a model's array value from an Api Resource class.
 
+#### Installation
+
 ```
+composer require christopherarter/laravel-resourceable
+
+```
+
+#### Examples 
 $user = new User([...]);
 return $user->toResourceArray();
 ```
