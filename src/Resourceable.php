@@ -1,44 +1,41 @@
 <?php
 
-namespace Arter\Resources\Resourceable;
+namespace Arter\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
 
 trait Resourceable
 {
-    protected $apiResource;
-
     /**
      * Returns the resource associated with this
      * class.
      *
-     * @param string $class
-     * @param $request
+     * @param string|null $class
+     * @param Request|null $request
      * @return array
      */
-    public function toResourceArray(string $class = null, $request = null) : array
+    public function toResourceArray(?string $class = null, ?Request $request = null): array
     {
-        if (!$class) {
-            $class = $this->resolveResourceName();
-        }
 
-        if ( $class 
-            && class_exists($class)
-            && is_subclass_of($class,JsonResource::class) ) {
-            return (new $class($this))->resolve($request);
+        $class = $class ?: $this->resolveResourceName();
+
+        if (class_exists($class) && is_subclass_of($class, JsonResource::class)) {
+            return json_decode(( new $class($this))->response()->content(), true);
         }
 
         return $this->toArray();
     }
 
     /**
-     * Resolves the resource class name according
-     * to standard naming convention.
+     * Resolve the resource class according to standard
+     * naming convention.
      *
-     * @return string|boolean
+     * @return string
      */
-    private function resolveResourceName()
+    protected function resolveResourceName(): string
     {
-        return (class_exists(self::class . 'Resource')) ?? null;
+        $reflect = new \ReflectionClass($this);
+        return "\\{$reflect->getNamespaceName()}\\Http\\Resources\\{$reflect->getShortName()}Resource";
     }
 }
