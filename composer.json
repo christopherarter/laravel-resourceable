@@ -1,0 +1,32 @@
+
+{
+    "name": "christopherarter/laravel-resourceable",
+    "description": "A handy method for accessing a model's value as an API resource",
+    "keywords": ["laravel", "php", "api resources"],
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Chris Arter",
+        "email": "chris@arter.dev"
+      }
+    ],
+    "require": {
+      "php": "^7.1.3",
+      "illuminate/config": "5.8.15|^6.0|^7.0",
+      "illuminate/support": "5.8.15|^6.0|^7.0"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+      "psr-4": {
+        "Arter\\Resources\\": "src/"
+      }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Arter\\Resources\\Tests\\": "tests/"
+        }
+      },
+    "minimum-stability": "dev"
+  }
